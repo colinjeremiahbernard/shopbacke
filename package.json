@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-     "start": "node server.js",
-     "startdev": "nodemon server.js"
+    "start": "node server.js",
+    "startdev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Colin",
@@ -19,5 +19,8 @@
     "jimp": "^0.16.2",
     "mongoose": "^6.8.4",
     "uuid": "^9.0.0"
+  },
+  "dependencies": {
+    "express-validator": "^6.14.3"
   }
 }

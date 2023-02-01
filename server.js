@@ -3,10 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const fileupload = require('express-fileupload');
-const router = express.Router();
-   router.get('/ping', (req, res) => {
-    res.json ({pong:true});
-   });
+const apiRoutes = require('./src/routes');
 
    mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -24,6 +21,8 @@ const router = express.Router();
    server.use(express.urlencoded({ extended: true }));
    server.use(fileupload());
    server.use(express.static(__dirname + '/public'));
+
+   server.use('/', apiRoutes);
 
    server.listen(process.env.PORT, () => {
     console.log(`Server running on port:
