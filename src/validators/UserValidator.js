@@ -42,7 +42,7 @@ module.exports = {
     isLength: {
       options: { min: 2 },
 },
-  errorMessage: "Senha precisa ter pelo menos 2 caracteres"
+errorMessage: "Senha precisa ter pelo menos 2 caracteres"
 }
   })
 };
