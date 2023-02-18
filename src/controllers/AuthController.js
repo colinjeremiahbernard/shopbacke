@@ -29,8 +29,8 @@ module.exports = {
   await user.save();
 
   res.json({ token, email: user.email });
-
-  signup: async(req, res) => {
+},
+signup: async(req, res) => {
      const errors = validationResult(req);
      if (!errors.isEmpty()) {
       res.json({ error: errors.mapped() });
@@ -73,5 +73,5 @@ module.exports = {
 
        res.json({ token });
 }
-  }
+  
 };

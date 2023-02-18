@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const modelSchema = new mongoose.schema({
+const modelSchema = new mongoose.Schema({
   idUser: String,
   state: String,
   category: String,

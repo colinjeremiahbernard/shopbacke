@@ -8,7 +8,7 @@ module.exports = {
     name: {
       optional: true,
       trim: true,
-      isLenght: {
+      isLength: {
         options: { min: 2 },
         },
       errorMessage:"Nome precisa ter pelo menos 2 caracteres"  

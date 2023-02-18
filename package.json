@@ -21,6 +21,7 @@
     "uuid": "^9.0.0"
   },
   "dependencies": {
-    "express-validator": "^6.14.3"
+    "express-validator": "^6.14.3",
+    "morgan": "^1.10.0"
   }
 }
