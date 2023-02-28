@@ -206,7 +206,79 @@ if (state) {
     });
   },
   editAction: async (req, res) => {
-    
-  }
-
+    let { id } = req.params;
+    let { title, status, price, priceneg, images,
+       desc, cat, token } = req.body;
+    if (id.length < 24) {
+      res.json({ error: 'ID invalido' });
+      return;
+    }
+    const ad = await Ad.findById(id).exec();
+    if (!ad) {
+      res.json({ error: 'Anuncio inexistente' });
+      return;
+    }
+    const user = await User.findOne({ token }).exec();
+    if (user._id.toString() !== ad.idUser) {
+      res.json({ error: "Este anuncio nao e seu" });
+      return;
+    }
+    let updates = {};
+    if (title) {
+      updates.title = title;
+    }
+    if (price) {
+      price = price
+      .replace('.','')
+      .replace(',','.')
+      .replace('R$','');
+      price = parseFloat(price);
+      updates.price = price;
+    }
+    if (priceneg) {
+      updates.priceNegotiable = priceneg;
+    }
+    if (status) {
+      updates.status = status;
+    }
+    if (desc) {
+      updates.description = desc;
+    }
+    if (cat) {
+      const category = await Category.findOne({ 
+        slug: cat }).exec();
+      if (!category) {
+        res.json({ error: "Category não existe" });
+        return;
+      }
+      updates.category = category._id.toString();
+    }
+    if (images) {
+      updates.images = images;
+    }
+    await Ad.findByIdAndUpdate(id, {$set: updates});
+    if (req.files && req.files.img) {
+      const adI = await Ad.findById(id);
+      if (req.files.img.length === undefined) {
+          if (['image/jpeg', 'image/jpg', 'image/png']
+          .includes(req.files.img.mimetype)) {
+            let url = await addImage(req.files.img.data);
+            adI.images.push({ url, default: false });
+          }
+        } else {
+          for (let index = 0; index < req.files.img.length;
+            index++) {
+              if (['image/jpeg', 'image/jpg', 'image/png']
+              .includes(req.files.image[index].mimetype)) {
+                let url = await addImage(req.files.img[index].data);
+                adI.image.push({ url, default: false });
+              }
+            }
+        }
+        adI.images = [...adI.images];
+        await adI.save();
+      }
+      res.json({ error: '' });
+    }
 };
+  
